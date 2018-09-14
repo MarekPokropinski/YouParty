@@ -1,0 +1,25 @@
+/YouParty_backend/target/
+/YouParty_backend/.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/YouParty_backend/nbproject/private/
+/YouParty_backend/build/
+/YouParty_backend/nbbuild/
+/YouParty_backend/dist/
+/YouParty_backend/nbdist/
+/YouParty_backend/.nb-gradle/
