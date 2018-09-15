@@ -1,4 +1,4 @@
-package party.youtube;
+package party.configuration;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -21,6 +22,7 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.YouTubeScopes;
 
+@Configuration
 public class YoutubeConfig {
 	/** Application name. */
 	private static final String APPLICATION_NAME = "YouParty";
@@ -58,9 +60,6 @@ public class YoutubeConfig {
 
 	/**
 	 * Create an authorized Credential object.
-	 * 
-	 * @return an authorized Credential object.
-	 * @throws IOException
 	 */
 	public static Credential authorize() throws IOException {
 		// Load client secrets.
@@ -77,9 +76,6 @@ public class YoutubeConfig {
 	/**
 	 * Build and return an authorized API client service, such as a YouTube Data API
 	 * client service.
-	 * 
-	 * @return an authorized API client service
-	 * @throws IOException
 	 */
 	@Bean
 	public static YouTube getYouTubeService() throws IOException {
