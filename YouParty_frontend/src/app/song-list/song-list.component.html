@@ -1,0 +1,8 @@
+<form (ngSubmit) = "handleSubmit()">
+  <input type="text" name="song" [(ngModel)] = "inputValue" autocomplete="off">
+</form>
+<ul>
+  <li *ngFor="let song of songs">
+    {{song}}
+  </li>
+</ul>
