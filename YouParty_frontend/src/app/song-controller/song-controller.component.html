@@ -1,0 +1,14 @@
+<div class="video-controls">
+  <button>
+    <img [src]="backPath" />
+  </button>
+  <button *ngIf="isPlaying" (click)="isPlaying=false">
+    <img [src]="playPath" />
+  </button>
+  <button *ngIf="!isPlaying" (click)="isPlaying=true">
+    <img [src]="pausePath" />
+  </button>
+  <button>
+    <img [src]="skipPath" />
+  </button>
+</div>
