@@ -10,6 +10,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,6 +35,12 @@ public class LobbyController {
 	@ResponseBody
 	List<YoutubeVideo> getQueue(@RequestParam long lobbyId) throws LobbyNotFoundException {
 		return lobbyService.getQueue(lobbyId);
+	}
+
+	@PostMapping("/createLobby")
+	@ResponseBody
+	long createLobby() {
+		return lobbyService.createLobby();
 	}
 
 	@MessageMapping("/add/{lobbyId}")

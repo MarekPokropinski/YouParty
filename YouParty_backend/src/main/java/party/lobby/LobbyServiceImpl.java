@@ -42,4 +42,10 @@ public class LobbyServiceImpl implements LobbyService {
 	public void addVideoToQueue(long lobbyId, YoutubeVideo video) throws LobbyNotFoundException {
 		addVideoToQueue(lobbyRepository.findById(lobbyId).orElseThrow(LobbyNotFoundException::new), video);
 	}
+
+	@Override
+	public long createLobby() {
+		Lobby lobby = new Lobby();
+		return lobbyRepository.saveAndFlush(lobby).getId();
+	}
 }

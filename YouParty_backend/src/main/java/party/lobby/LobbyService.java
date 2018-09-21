@@ -12,4 +12,6 @@ public interface LobbyService {
 	List<YoutubeVideo> getQueue(Lobby lobby);
 
 	List<YoutubeVideo> getQueue(long lobbyId) throws LobbyNotFoundException;
+
+	long createLobby();
 }

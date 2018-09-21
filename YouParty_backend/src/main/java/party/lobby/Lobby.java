@@ -1,5 +1,6 @@
 package party.lobby;
 
+import java.util.ArrayDeque;
 import java.util.Queue;
 
 import javax.persistence.Entity;
@@ -12,6 +13,11 @@ import party.video.Video;
 public class Lobby extends Basemodel {
 	@OneToMany
 	private Queue<Video> videoQueue;
+
+	public Lobby() {
+		super();
+		videoQueue = new ArrayDeque<Video>();
+	}
 
 	public Queue<Video> getVideoQueue() {
 		return videoQueue;
