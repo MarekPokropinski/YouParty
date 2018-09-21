@@ -6,36 +6,40 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import party.video.Video;
+import party.video.VideoService;
 import party.youtube.YoutubeVideo;
 
 @Service
 public class LobbyServiceImpl implements LobbyService {
-
-	private VideoRepository videoRepository;
+	private LobbyRepository lobbyRepository;
+	private VideoService videoService;
 
 	@Autowired
-	public LobbyServiceImpl(VideoRepository videoRepository) {
-		this.videoRepository = videoRepository;
+	public LobbyServiceImpl(LobbyRepository lobbyRepository, VideoService videoService) {
+		this.lobbyRepository = lobbyRepository;
+		this.videoService = videoService;
 	}
 
 	@Override
-	public void addVideoToQueue(YoutubeVideo video) {
-		VideoEntity entity = createVideoEntity(video);
-		videoRepository.saveAndFlush(entity);
+	public void addVideoToQueue(Lobby lobby, YoutubeVideo youtubeVideo) {
+		Video video = videoService.createVideo(youtubeVideo);
+		lobby.getVideoQueue().add(video);
+		lobbyRepository.save(lobby);
 	}
 
 	@Override
-	public List<YoutubeVideo> getQueue() {
-		return videoRepository.findAllByOrderByIdAsc().stream().map(videoEntity -> createYoutubeVideo(videoEntity))
-				.collect(Collectors.toList());
+	public List<YoutubeVideo> getQueue(Lobby lobby) {
+		return lobby.getVideoQueue().stream().map(video -> video.getVideo()).collect(Collectors.toList());
 	}
 
-	private VideoEntity createVideoEntity(YoutubeVideo video) {
-		return new VideoEntity(video);
+	@Override
+	public List<YoutubeVideo> getQueue(long lobbyId) throws LobbyNotFoundException {
+		return getQueue(lobbyRepository.findById(lobbyId).orElseThrow(LobbyNotFoundException::new));
 	}
 
-	private YoutubeVideo createYoutubeVideo(VideoEntity videoEntity) {
-		return videoEntity.getVideo();
+	@Override
+	public void addVideoToQueue(long lobbyId, YoutubeVideo video) throws LobbyNotFoundException {
+		addVideoToQueue(lobbyRepository.findById(lobbyId).orElseThrow(LobbyNotFoundException::new), video);
 	}
-
 }
