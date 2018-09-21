@@ -1,3 +1,4 @@
+import { YoutubeService } from './../youtube.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,11 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ImageDisplayComponent implements OnInit {
 
-  imgPath = 'assets/echo.png';
+  imgPath = 'https://img.youtube.com/vi/cQKGUgOfD8U/maxresdefault.jpg';
+  player: YT.Player;
+  videoid = 'cQKGUgOfD8U';
 
-  constructor() { }
+  constructor(private youtubeService: YoutubeService) { }
 
   ngOnInit() {
+
+  }
+
+  savePlayer(player) {
+    // autoplay
+    player.playVideo();
+    this.youtubeService.createPlayer(player);
+    console.log('player instance', player);
+  }
+  onStateChange(event) {
+    console.log('player state', event.data);
   }
 
   loadImage(src: string, onLoad: any) {
