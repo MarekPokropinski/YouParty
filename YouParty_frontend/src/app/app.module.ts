@@ -12,6 +12,7 @@ import { ImageDisplayComponent } from './image-display/image-display.component';
 
 import { StompConfig, StompService } from '@stomp/ng2-stompjs';
 
+
 const stompConfig: StompConfig = {
   url: 'ws://localhost:8080/queueWS',
   headers: {
