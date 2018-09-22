@@ -1,4 +1,4 @@
-package party.configuration;
+package party.youtube;
 
 import java.io.IOException;
 import java.io.InputStream;
