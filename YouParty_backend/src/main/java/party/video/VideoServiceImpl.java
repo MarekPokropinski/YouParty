@@ -1,7 +1,10 @@
 package party.video;
 
+import org.springframework.stereotype.Service;
+
 import party.youtube.YoutubeVideo;
 
+@Service
 public class VideoServiceImpl implements VideoService {
 	private VideoRepository videoRepository;
 
