@@ -10,6 +10,20 @@ import { SongControllerComponent } from './song-controller/song-controller.compo
 import { QrDisplayComponent } from './qr-display/qr-display.component';
 import { ImageDisplayComponent } from './image-display/image-display.component';
 
+import { StompConfig, StompService } from '@stomp/ng2-stompjs';
+
+const stompConfig: StompConfig = {
+  url: 'ws://localhost:8080/queueWS',
+  headers: {
+    login: 'guest',
+    passcode: 'guest'
+  },
+  heartbeat_in: 0,
+  heartbeat_out: 20000,
+  reconnect_delay: 5000,
+  debug: true
+};
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +38,13 @@ import { ImageDisplayComponent } from './image-display/image-display.component';
     YoutubePlayerModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    StompService,
+    {
+      provide: StompConfig,
+      useValue: stompConfig
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
