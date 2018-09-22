@@ -13,6 +13,7 @@ export class SongQueueService implements OnDestroy {
   lobbyId: number;
   public songs: Array<string> = [];
   private lobbyUrl = 'http://localhost:8080/lobby';
+  private youUrl = 'http://localhost:8080/you';
 
   private subscription: Subscription;
   public messages: Observable<Message>;
@@ -43,7 +44,7 @@ export class SongQueueService implements OnDestroy {
       )
       .subscribe((id) => {
         this.lobbyId = id;
-        this.messages = this._stompService.subscribe(`/stomp/lobby/queue/${this.lobbyId}`);
+        this.messages = this._stompService.subscribe(`/stomp/queue/${this.lobbyId}`);
         this.subscription = this.messages.subscribe((message: Message) => {
           try {
             console.log(message);
@@ -60,8 +61,18 @@ export class SongQueueService implements OnDestroy {
   }
 
   push(song: string): void {
-    this.songs.push(song);
-    // send new song to service
-    this._stompService.publish(`/stomp/lobby/add/${this.lobbyId}`, `"${song}"`);
+    this.http.get<Array<any>>(`${this.youUrl}/find?title=${song}`, {})
+      .pipe(
+        catchError(this.handleError('findSong', []))
+      )
+      .subscribe((videoArr) => {
+        if (videoArr.length > 0) {
+          const front = videoArr[0];
+          console.log(front);
+          this.songs.push(front.title);
+          // send new song to service
+          this._stompService.publish(`/stomp/add/${this.lobbyId}`, JSON.stringify(front));
+        }
+      });
   }
 }

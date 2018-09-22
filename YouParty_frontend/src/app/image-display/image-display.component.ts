@@ -20,12 +20,13 @@ export class ImageDisplayComponent implements OnInit {
 
   savePlayer(player) {
     // autoplay
-    player.playVideo();
+    // player.playVideo();
     this.youtubeService.createPlayer(player);
     console.log('player instance', player);
   }
   onStateChange(event) {
     console.log('player state', event.data);
+    this.youtubeService.onStateChange(event);
   }
 
   loadImage(src: string, onLoad: any) {
