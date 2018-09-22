@@ -1,0 +1,14 @@
+.video-controls {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  margin: 10px;
+  border: none;
+  color: white;
+  padding: 15px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}

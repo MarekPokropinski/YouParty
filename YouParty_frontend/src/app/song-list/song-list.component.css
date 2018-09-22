@@ -1,0 +1,32 @@
+ul {
+  list-style-type: none;
+  padding-left: 0;
+  overflow-y: scroll;
+
+  height: 250px;
+}
+
+ul li {
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+ul li:nth-child(even) {background-color: #f2f2f2;}
+
+input[type=text] {
+  font-size: 16px;
+    width: 100%;
+    padding: 12px 14px;
+    box-sizing: border-box;
+}
+/* scroolbar styles */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
