@@ -11,9 +11,11 @@ import { Observable, Subscription, of } from 'rxjs';
 export class SongQueueService implements OnDestroy {
 
   lobbyId: number;
-  public songs: Array<string> = [];
+  public songs: Array<any> = [];
   private lobbyUrl = 'http://localhost:8080/lobby';
   private youUrl = 'http://localhost:8080/you';
+
+  private listeners: Array<any> = [];
 
   private subscription: Subscription;
   public messages: Observable<Message>;
@@ -69,10 +71,19 @@ export class SongQueueService implements OnDestroy {
         if (videoArr.length > 0) {
           const front = videoArr[0];
           console.log(front);
-          this.songs.push(front.title);
+          this.songs.push(front);
           // send new song to service
           this._stompService.publish(`/stomp/add/${this.lobbyId}`, JSON.stringify(front));
+          console.log(this.listeners);
+          for (let i = 0; i < this.listeners.length; i++) {
+            console.log(this.listeners[i]);
+            this.listeners[i]();
+          }
         }
       });
+  }
+
+  onChange(func: any): void {
+    this.listeners.push(func);
   }
 }

@@ -4,6 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Collection;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 import party.basemodel.Basemodel;
@@ -11,7 +12,7 @@ import party.video.Video;
 
 @Entity
 public class Lobby extends Basemodel {
-	@OneToMany
+	@OneToMany(fetch=FetchType.EAGER)
 	private Collection<Video> videoQueue;
 
 	public Lobby() {
