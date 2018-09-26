@@ -20,7 +20,9 @@ export class YoutubeService {
     };
   });
 
-  constructor(private songQueueService: SongQueueService) {
+  constructor(
+    private songQueueService: SongQueueService
+  ) {
     this.init();
   }
 
@@ -40,9 +42,10 @@ export class YoutubeService {
     console.log(this.songQueueService);
     if (event.data === 0) {
       if (this.songQueueService.songs.length > 0) {
+
         const first = this.songQueueService.songs[0];
         this.startSong(first.id);
-        // this.songQueueService.pop();
+        this.songQueueService.pop();
       }
     }
   }

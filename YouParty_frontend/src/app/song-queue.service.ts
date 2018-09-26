@@ -16,6 +16,9 @@ export class SongQueueService implements OnDestroy {
   private youUrl = 'http://localhost:8080/you';
 
   private listeners: Array<any> = [];
+  public changes = new Observable<void>((observer) => {
+
+  });
 
   private subscription: Subscription;
   public messages: Observable<Message>;
@@ -59,7 +62,7 @@ export class SongQueueService implements OnDestroy {
   }
 
   pop(): void {
-    this.songs.shift();
+    this._stompService.publish(`/stomp/skip/${this.lobbyId}`, '');
   }
 
   push(song: string): void {
@@ -74,9 +77,7 @@ export class SongQueueService implements OnDestroy {
           this.songs.push(front);
           // send new song to service
           this._stompService.publish(`/stomp/add/${this.lobbyId}`, JSON.stringify(front));
-          console.log(this.listeners);
           for (let i = 0; i < this.listeners.length; i++) {
-            console.log(this.listeners[i]);
             this.listeners[i]();
           }
         }
