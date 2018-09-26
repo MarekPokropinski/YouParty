@@ -3,6 +3,7 @@ package party.lobby;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,8 @@ import party.youtube.YoutubeVideo;
 public class LobbyServiceImpl implements LobbyService {
 	private LobbyRepository lobbyRepository;
 	private VideoService videoService;
+
+	private static final Logger LOG = Logger.getLogger(LobbyService.class);
 
 	@Autowired
 	public LobbyServiceImpl(LobbyRepository lobbyRepository, VideoService videoService) {
@@ -47,5 +50,14 @@ public class LobbyServiceImpl implements LobbyService {
 	public long createLobby() {
 		Lobby lobby = new Lobby();
 		return lobbyRepository.saveAndFlush(lobby).getId();
+	}
+
+	@Override
+	public void popFromQueue(long lobbyId) throws LobbyNotFoundException {
+		try {
+			lobbyRepository.findById(lobbyId).orElseThrow(LobbyNotFoundException::new).getVideoQueue().remove(0);
+		} catch (IndexOutOfBoundsException e) {
+			LOG.warn("tried to remove top element from empty queue");
+		}
 	}
 }
