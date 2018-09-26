@@ -50,7 +50,19 @@ public class LobbyController {
 			lobbyService.addVideoToQueue(lobbyId, youtubeVideo);
 			return lobbyService.getQueue(lobbyId);
 		} catch (LobbyNotFoundException e) {
-			LOG.error(String.format("failed to add video to queue with id: %s, reason: lobby not found", lobbyId));
+			LOG.error(String.format("failed to add video to lobby with id: %s, reason: lobby not found", lobbyId));
+		}
+		return List.of();
+	}
+
+	@MessageMapping("/skip/{lobbyId}")
+	@SendTo("/queue/{lobbyId}")
+	public List<YoutubeVideo> popVideoFromQueue(@DestinationVariable long lobbyId) {
+		try {
+			lobbyService.popFromQueue(lobbyId);
+			return lobbyService.getQueue(lobbyId);
+		} catch (LobbyNotFoundException e) {
+			LOG.error(String.format("failed to pop video from lobby with id: %s, reason: lobby not found", lobbyId));
 		}
 		return List.of();
 	}
