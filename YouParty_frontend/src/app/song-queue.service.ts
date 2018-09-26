@@ -46,10 +46,10 @@ export class SongQueueService implements OnDestroy {
       )
       .subscribe((id) => {
         this.lobbyId = id;
-        this.messages = this._stompService.subscribe(`/stomp/queue/${this.lobbyId}`);
+        this.messages = this._stompService.subscribe(`/queue/${this.lobbyId}`);
         this.subscription = this.messages.subscribe((message: Message) => {
           try {
-            console.log(message);
+            console.log('Received: ', message);
             this.songs = JSON.parse(message.body) as Array<string>;
           } catch (error) {
             console.error(`Got error while receiving/parsing message: ${error}`);

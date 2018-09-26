@@ -1,5 +1,6 @@
 import { YoutubeService } from './../youtube.service';
 import { Component, OnInit } from '@angular/core';
+import { Observable, Subscriber } from 'rxjs';
 
 @Component({
   selector: 'app-image-display',
@@ -15,7 +16,11 @@ export class ImageDisplayComponent implements OnInit {
   constructor(private youtubeService: YoutubeService) { }
 
   ngOnInit() {
-
+    this.youtubeService.videoChanges
+      .subscribe((videoid) => {
+        this.videoid = videoid;
+        this.imgPath = `https://img.youtube.com/vi/${videoid}/maxresdefault.jpg`;
+      });
   }
 
   savePlayer(player) {
@@ -29,18 +34,22 @@ export class ImageDisplayComponent implements OnInit {
     this.youtubeService.onStateChange(event);
   }
 
-  loadImage(src: string, onLoad: any) {
+  loadImage(src: string): Observable<string> {
     const downloadingImage = new Image();
-    downloadingImage.onload = onLoad;
-    downloadingImage.src = src;
+    const ret = new Observable<string>((observer) => {
+      downloadingImage.onload = () => observer.next(src);
+      return { unsubscribe() { } };
+    });
+    return ret;
   }
 
   onImageRecieved(data: string) {
     // start loading
-    this.loadImage(`data:image/png;base64,${data}`, () => {
-      this.imgPath = `data:image/png;base64,${data}`;
-      // end loading
-    });
+    this.loadImage(`data:image/png;base64,${data}`)
+      .subscribe(() => {
+        this.imgPath = `data:image/png;base64,${data}`;
+        // end loading
+      });
   }
 
 }
