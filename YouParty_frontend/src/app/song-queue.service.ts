@@ -13,12 +13,10 @@ export class SongQueueService implements OnDestroy {
   public songs: Array<Video> = [];
   public changes = new Observable<void>((observer) => {
     this.listeners.push(observer);
-    return {
-      unsubscribe() {
-        const index = this.listeners.indexof(observer);
-        if (index > -1) {
-          this.listeners.splice(index, 1);
-        }
+    return () => {
+      const index = this.listeners.indexOf(observer);
+      if (index > -1) {
+        this.listeners.splice(index, 1);
       }
     };
   });
@@ -47,6 +45,10 @@ export class SongQueueService implements OnDestroy {
         this.subscription = this.messages.subscribe((message: Message) => {
           try {
             this.songs = JSON.parse(message.body) as Array<Video>;
+            // iterate backwards so you can unsubscribe in subscribtion
+            for (let i = this.listeners.length - 1; i >= 0; i--) {
+              this.listeners[i].next(null);
+            }
           } catch (error) {
             console.error(`Got error while receiving/parsing message: ${error}`);
           }
@@ -68,8 +70,8 @@ export class SongQueueService implements OnDestroy {
   pop(): Observable<void> {
     this._stompService.publish(`/stomp/skip/${this.lobbyId}`, '');
     return new Observable<void>((observer) => {
-      const changes = this.changes.subscribe(() => {
-        changes.unsubscribe();
+      const _changes = this.changes.subscribe(() => {
+        _changes.unsubscribe();
         observer.next(null);
       });
     });
@@ -86,10 +88,6 @@ export class SongQueueService implements OnDestroy {
           this.songs.push(front);
           // send new song to service
           this._stompService.publish(`/stomp/add/${this.lobbyId}`, JSON.stringify(front));
-          // iterate backwards so you can unsubscribe in subscribtion
-          for (let i = this.listeners.length - 1; i >= 0; i--) {
-            this.listeners[i].next(null);
-          }
         }
       });
   }
