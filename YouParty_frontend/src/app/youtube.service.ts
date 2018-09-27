@@ -57,7 +57,6 @@ export class YoutubeService implements OnDestroy {
   }
 
   onQueueChange(): void {
-    console.log('Queue changed');
     if (this.player.getPlayerState() !== 1 && this.player.getPlayerState() !== 2 && this.songQueueService.songs.length > 0) {
       const first = this.songQueueService.songs[0];
       this.startSong(first.id);
