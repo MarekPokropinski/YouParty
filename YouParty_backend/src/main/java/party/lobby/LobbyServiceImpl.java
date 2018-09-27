@@ -55,7 +55,12 @@ public class LobbyServiceImpl implements LobbyService {
 	@Override
 	public void popFromQueue(long lobbyId) throws LobbyNotFoundException {
 		try {
-			lobbyRepository.findById(lobbyId).orElseThrow(LobbyNotFoundException::new).getVideoQueue().remove(0);
+			Lobby lobby = lobbyRepository.findById(lobbyId).orElseThrow(LobbyNotFoundException::new);
+			List<Video> videoQueue = lobby.getVideoQueue();
+			Video videoToRemove = videoQueue.get(0);
+			videoQueue.remove(0);
+			lobbyRepository.save(lobby);
+			videoService.removeVideo(videoToRemove);
 		} catch (IndexOutOfBoundsException e) {
 			LOG.warn("tried to remove top element from empty queue");
 		}
