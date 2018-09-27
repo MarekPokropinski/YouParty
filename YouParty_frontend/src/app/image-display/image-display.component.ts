@@ -1,36 +1,34 @@
 import { YoutubeService } from './../youtube.service';
-import { Component, OnInit } from '@angular/core';
-import { Observable, Subscriber } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-image-display',
   templateUrl: './image-display.component.html',
   styleUrls: ['./image-display.component.css']
 })
-export class ImageDisplayComponent implements OnInit {
+export class ImageDisplayComponent implements OnInit, OnDestroy {
 
-  imgPath = 'https://img.youtube.com/vi/cQKGUgOfD8U/maxresdefault.jpg';
-  player: YT.Player;
-  videoid = 'cQKGUgOfD8U';
+  public imgPath = 'https://img.youtube.com/vi/cQKGUgOfD8U/maxresdefault.jpg';
+  private videoChanges: Subscription;
 
   constructor(private youtubeService: YoutubeService) { }
 
   ngOnInit() {
-    this.youtubeService.videoChanges
+    this.videoChanges = this.youtubeService.videoChanges
       .subscribe((videoid) => {
-        this.videoid = videoid;
         this.imgPath = `https://img.youtube.com/vi/${videoid}/maxresdefault.jpg`;
       });
   }
 
+  ngOnDestroy() {
+    this.videoChanges.unsubscribe();
+  }
+
   savePlayer(player) {
-    // autoplay
-    // player.playVideo();
     this.youtubeService.createPlayer(player);
-    console.log('player instance', player);
   }
   onStateChange(event) {
-    console.log('player state', event.data);
     this.youtubeService.onStateChange(event);
   }
 
@@ -42,14 +40,4 @@ export class ImageDisplayComponent implements OnInit {
     });
     return ret;
   }
-
-  onImageRecieved(data: string) {
-    // start loading
-    this.loadImage(`data:image/png;base64,${data}`)
-      .subscribe(() => {
-        this.imgPath = `data:image/png;base64,${data}`;
-        // end loading
-      });
-  }
-
 }
