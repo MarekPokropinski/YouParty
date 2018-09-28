@@ -3,10 +3,10 @@
     <img [src]="backPath" />
   </button>
   <button *ngIf="!isPlaying" (click)="onPlay()">
-    <img [src]="playPath" />
+    <img width=24px height=24px [src]="playPath" />
   </button>
   <button *ngIf="isPlaying" (click)="onPause()">
-    <img [src]="pausePath" />
+    <img width=24px height=24px [src]="pausePath" />
   </button>
   <button>
     <img [src]="skipPath" />

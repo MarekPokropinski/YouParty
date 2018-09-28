@@ -19,9 +19,6 @@ export class SongListComponent implements OnInit {
 
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.songQueueService.changes.subscribe((_) => {
-      this.songs = this.songQueueService.songs;
-    });
     this.songQueueService.init(id);
   }
 

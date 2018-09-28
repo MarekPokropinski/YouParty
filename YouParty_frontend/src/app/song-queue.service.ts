@@ -21,7 +21,7 @@ export class SongQueueService implements OnDestroy {
     };
   });
   public messages: Observable<Message>;
-  private lobbyId: number;
+  public lobbyId: number;
   private lobbyUrl = 'http://localhost:8080/lobby';
   private youUrl = 'http://localhost:8080/you';
   private listeners: Array<Observer<void>> = [];
