@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jboss.logging.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,6 +27,8 @@ import com.google.api.services.youtube.YouTubeScopes;
 public class YoutubeConfig {
 	/** Application name. */
 	private static final String APPLICATION_NAME = "YouParty";
+
+	private static final Logger LOG = Logger.getLogger(YoutubeConfig.class);
 
 	/** Directory to store user credentials for this application. */
 	private static final java.io.File DATA_STORE_DIR = new java.io.File(System.getProperty("user.home"),
@@ -79,6 +82,7 @@ public class YoutubeConfig {
 	 */
 	@Bean
 	public static YouTube getYouTubeService() throws IOException {
+		LOG.info("Connecting with YouTube API serivce");
 		Credential credential = authorize();
 		return new YouTube.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential).setApplicationName(APPLICATION_NAME)
 				.build();

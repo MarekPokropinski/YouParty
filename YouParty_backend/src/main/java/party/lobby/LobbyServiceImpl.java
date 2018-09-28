@@ -24,15 +24,13 @@ public class LobbyServiceImpl implements LobbyService {
 		this.videoService = videoService;
 	}
 
-	@Override
-	public void addVideoToQueue(Lobby lobby, YoutubeVideo youtubeVideo) {
+	private void addVideoToQueue(Lobby lobby, YoutubeVideo youtubeVideo) {
 		Video video = videoService.createVideo(youtubeVideo);
 		lobby.getVideoQueue().add(video);
 		lobbyRepository.save(lobby);
 	}
 
-	@Override
-	public List<YoutubeVideo> getQueue(Lobby lobby) {
+	private List<YoutubeVideo> getQueue(Lobby lobby) {
 		return lobby.getVideoQueue().stream().map(video -> video.getVideo()).collect(Collectors.toList());
 	}
 

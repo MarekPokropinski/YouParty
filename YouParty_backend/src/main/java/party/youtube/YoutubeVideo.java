@@ -47,4 +47,16 @@ public class YoutubeVideo {
 		return String.format("{\n\ttitle: %s\n\tid: %s\n\turl: %s\n}\n", title, videoId, imageUrl);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj.getClass() == this.getClass()) {
+			YoutubeVideo second = (YoutubeVideo) obj;
+			return title.equals(second.getTitle()) && videoId.equals(second.getId())
+					&& imageUrl.equals(second.getImageUrl());
+		}
+		return false;
+	}
+
 }
