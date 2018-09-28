@@ -12,7 +12,7 @@ import party.video.Video;
 
 @Entity
 public class Lobby extends Basemodel {
-	@OneToMany(fetch=FetchType.EAGER)
+	@OneToMany(fetch = FetchType.EAGER)
 	private List<Video> videoQueue;
 
 	public Lobby() {
