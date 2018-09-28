@@ -1,4 +1,4 @@
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 import { SongQueueService } from './../song-queue.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -10,19 +10,19 @@ import { Component, OnInit } from '@angular/core';
 export class SongListComponent implements OnInit {
 
   inputValue = '';
+  songs = [];
 
   constructor(
-    private songQueueService: SongQueueService,
+    public songQueueService: SongQueueService,
     private route: ActivatedRoute,
-    private router: Router
     ) { }
 
   ngOnInit() {
-    console.log(this.router.url);
-    console.log(this.route);
-    const id = this.route.snapshot.paramMap.get('id');
-    console.log(id);
-    this.songQueueService.init(8);
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.songQueueService.changes.subscribe((_) => {
+      this.songs = this.songQueueService.songs;
+    });
+    this.songQueueService.init(id);
   }
 
   handleSubmit(): void {

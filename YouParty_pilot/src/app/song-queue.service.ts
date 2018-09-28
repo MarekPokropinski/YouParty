@@ -4,7 +4,6 @@ import { catchError } from 'rxjs/operators';
 import { Message } from '@stomp/stompjs';
 import { StompService } from '@stomp/ng2-stompjs';
 import { Observable, Subscription, of, Observer } from 'rxjs';
-import { ActivatedRoute, Params } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -25,13 +24,13 @@ export class SongQueueService implements OnDestroy {
   private lobbyId: number;
   private lobbyUrl = 'http://localhost:8080/lobby';
   private youUrl = 'http://localhost:8080/you';
+  private queueUrl = 'http://localhost:8080/queue';
   private listeners: Array<Observer<void>> = [];
   private subscription: Subscription;
 
   constructor(
     private http: HttpClient,
-    private _stompService: StompService,
-    private route: ActivatedRoute
+    private _stompService: StompService
   ) {
 
   }
@@ -49,6 +48,9 @@ export class SongQueueService implements OnDestroy {
       } catch (error) {
         console.error(`Got error while receiving/parsing message: ${error}`);
       }
+    });
+    this.http.get<Array<Video>>(`${this.queueUrl}?lobbyId=${this.lobbyId}`).subscribe((songs) => {
+      this.songs = songs;
     });
   }
 

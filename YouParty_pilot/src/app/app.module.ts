@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { SongListComponent } from './song-list/song-list.component';
 
 import { StompConfig, StompService } from '@stomp/ng2-stompjs';
+import { SelectorComponent } from './selector/selector.component';
 
 const stompConfig: StompConfig = {
   url: 'ws://localhost:8080/queueWS',
@@ -24,7 +25,8 @@ const stompConfig: StompConfig = {
 @NgModule({
   declarations: [
     AppComponent,
-    SongListComponent
+    SongListComponent,
+    SelectorComponent
   ],
   imports: [
     BrowserModule,
