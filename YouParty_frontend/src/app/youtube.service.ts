@@ -45,12 +45,16 @@ export class YoutubeService implements OnDestroy {
   }
 
   onStateChange(event): void {
+    // when stopped playing
     if (event.data === 0) {
       if (this.songQueueService.songs.length > 0) {
+        // delete first song
         this.songQueueService.pop().subscribe((_) => {
-          const first = this.songQueueService.songs[0];
-          console.log(first);
-          this.startSong(first.id);
+          // if there is next song play it
+          if (this.songQueueService.songs.length > 0) {
+            const first = this.songQueueService.songs[0];
+            this.startSong(first.id);
+          }
         });
       }
     }
