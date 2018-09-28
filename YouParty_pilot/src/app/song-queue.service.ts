@@ -24,7 +24,6 @@ export class SongQueueService implements OnDestroy {
   private lobbyId: number;
   private lobbyUrl = 'http://localhost:8080/lobby';
   private youUrl = 'http://localhost:8080/you';
-  private queueUrl = 'http://localhost:8080/queue';
   private listeners: Array<Observer<void>> = [];
   private subscription: Subscription;
 
@@ -42,20 +41,25 @@ export class SongQueueService implements OnDestroy {
       try {
         this.songs = JSON.parse(message.body) as Array<Video>;
         // iterate backwards so you can unsubscribe in subscribtion
-        for (let i = this.listeners.length - 1; i >= 0; i--) {
-          this.listeners[i].next(null);
-        }
+        this.notifyListeners();
       } catch (error) {
         console.error(`Got error while receiving/parsing message: ${error}`);
       }
     });
-    this.http.get<Array<Video>>(`${this.queueUrl}?lobbyId=${this.lobbyId}`).subscribe((songs) => {
+    this.http.get<Array<Video>>(`${this.lobbyUrl}/queue?lobbyId=${this.lobbyId}`).subscribe((songs) => {
       this.songs = songs;
+      this.notifyListeners();
     });
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  private notifyListeners(): void {
+    for (let i = this.listeners.length - 1; i >= 0; i--) {
+      this.listeners[i].next(null);
+    }
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
