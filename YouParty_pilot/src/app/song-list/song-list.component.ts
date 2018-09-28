@@ -10,7 +10,6 @@ import { Component, OnInit } from '@angular/core';
 export class SongListComponent implements OnInit {
 
   inputValue = '';
-  songs = [];
 
   constructor(
     public songQueueService: SongQueueService,
