@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "party.remote.url",
+  "type": "java.lang.String",
+  "description": "url to remote controller eg. 'http://localhost:4201/lobby'"
+}]}
