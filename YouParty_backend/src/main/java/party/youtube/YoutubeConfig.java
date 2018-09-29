@@ -9,6 +9,7 @@ import java.util.List;
 import org.jboss.logging.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -24,6 +25,7 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.YouTubeScopes;
 
 @Configuration
+@Profile(value = { "dev", "prod" })
 public class YoutubeConfig {
 	/** Application name. */
 	private static final String APPLICATION_NAME = "YouParty";

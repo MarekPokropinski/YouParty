@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.google.api.services.youtube.YouTube;
@@ -12,6 +13,7 @@ import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 
 @Service
+@Profile(value = { "dev", "prod" })
 public class YoutubeServiceImpl implements YoutubeService {
 	private static final long MAX_RESULTS = 5;
 
