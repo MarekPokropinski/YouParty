@@ -23,6 +23,3 @@
 /YouParty_backend/dist/
 /YouParty_backend/nbdist/
 /YouParty_backend/.nb-gradle/
-
-client_secret.json
-YouParty_backend/src/main/resources/application.properties
