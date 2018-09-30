@@ -1,5 +1,12 @@
-{"properties": [{
-  "name": "party.remote.url",
-  "type": "java.lang.String",
-  "description": "url to remote controller eg. 'http://localhost:4201/lobby'"
-}]}
+{"properties": [
+  {
+    "name": "party.remote.url",
+    "type": "java.lang.String",
+    "description": "url to remote controller eg. 'http://localhost:4201/lobby'"
+  },
+  {
+    "name": "google.api.key",
+    "type": "java.lang.String",
+    "description": "key to google api"
+  }
+]}
