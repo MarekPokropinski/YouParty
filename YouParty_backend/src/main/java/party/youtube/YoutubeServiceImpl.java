@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.google.api.services.youtube.YouTube;
@@ -12,8 +14,12 @@ import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 
 @Service
+@Profile(value = { "dev", "prod" })
 public class YoutubeServiceImpl implements YoutubeService {
 	private static final long MAX_RESULTS = 5;
+
+	@Value("${google.api.key}")
+	private String apiKey;
 
 	@Autowired
 	private YouTube youtube;
@@ -29,7 +35,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 	public List<YoutubeVideo> findVideo(String title) throws YoutubeException {
 		try {
 			SearchListResponse response = youtube.search().list("snippet").setMaxResults(MAX_RESULTS).setQ(title)
-					.setType("video").execute();
+					.setType("video").setKey(apiKey).execute();
 			return response.getItems().stream().map(result -> getVideoFromSearchResult(result))
 					.collect(Collectors.toList());
 		} catch (IOException e) {

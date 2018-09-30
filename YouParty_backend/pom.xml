@@ -6,7 +6,7 @@
 	<groupId>party</groupId>
 	<artifactId>YouParty</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>YouParty</name>
 	<description>party</description>
@@ -26,19 +26,13 @@
 
 	<dependencies>
 		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+		<dependency>
 		    <groupId>javax.xml.bind</groupId>
 		    <artifactId>jaxb-api</artifactId>
-		    <version>2.2.11</version>
-		</dependency>
-		<dependency>
-		    <groupId>com.sun.xml.bind</groupId>
-		    <artifactId>jaxb-core</artifactId>
-		    <version>2.2.11</version>
-		</dependency>
-		<dependency>
-		    <groupId>com.sun.xml.bind</groupId>
-		    <artifactId>jaxb-impl</artifactId>
-		    <version>2.2.11</version>
 		</dependency>
 		<dependency>
 		    <groupId>javax.activation</groupId>
@@ -74,9 +68,10 @@
             <version>2.3.3</version>
         </dependency>
 		<dependency>
-		    <groupId>com.h2database</groupId>
-		    <artifactId>h2</artifactId>
-		</dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
 		<dependency>
 			<groupId>org.mortbay.jetty</groupId>
 			<artifactId>jetty</artifactId>
@@ -107,6 +102,16 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.0.1</version>
 		</dependency>
+		<dependency>
+	        <groupId>com.google.zxing</groupId>
+	        <artifactId>core</artifactId>
+	        <version>3.3.0</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>com.google.zxing</groupId>
+	        <artifactId>javase</artifactId>
+	        <version>3.3.0</version>
+	    </dependency>
 	</dependencies>
 
 	<build>
@@ -116,7 +121,31 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<finalName>youparty</finalName>
 	</build>
 
-
+	<profiles>
+		<profile>
+		    <id>test</id>
+		    <properties>
+		        <activatedProperties>test</activatedProperties>
+		    </properties>
+			<activation>
+		        <activeByDefault>true</activeByDefault>
+		    </activation>
+		</profile>
+		<profile>
+		    <id>dev</id>
+		    <properties>
+		        <activatedProperties>dev</activatedProperties>
+		    </properties>		    
+		</profile>
+		<profile>
+		    <id>prod</id>
+		    <properties>
+		        <activatedProperties>prod</activatedProperties>
+		    </properties>
+		</profile>
+	</profiles>
+	
 </project>
