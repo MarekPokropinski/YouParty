@@ -1,3 +1,4 @@
+import { YoutubeService } from './../youtube.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -17,7 +18,7 @@ export class SongControllerComponent implements OnInit {
 
   isPlaying = true;
 
-  constructor() { }
+  constructor(private youtubeService: YoutubeService) { }
 
   ngOnInit() {
     // load images
@@ -26,6 +27,16 @@ export class SongControllerComponent implements OnInit {
 
     this.playImage = new Image();
     this.playImage.src = this.playPath;
+  }
+
+  onPause() {
+    this.youtubeService.getPlayer().pauseVideo();
+    this.isPlaying = false;
+  }
+
+  onPlay() {
+    this.youtubeService.getPlayer().playVideo();
+    this.isPlaying = true;
   }
 
 }

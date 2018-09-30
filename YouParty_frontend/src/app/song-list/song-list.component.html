@@ -2,7 +2,7 @@
   <input type="text" name="song" [(ngModel)] = "inputValue" autocomplete="off">
 </form>
 <ul>
-  <li *ngFor="let song of songs">
-    {{song}}
+  <li *ngFor="let song of songQueueService.songs">
+    {{song.title}}
   </li>
 </ul>

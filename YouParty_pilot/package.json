@@ -1,9 +1,9 @@
 {
-  "name": "youtube-party-ng",
+  "name": "you-party-pilot",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host=0.0.0.0",
+    "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -20,9 +20,9 @@
     "@angular/platform-browser": "^6.1.0",
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
-    "@stomp/ng2-stompjs": "^6.1.0-beta.2",
+    "@stomp/ng2-stompjs": "^6.1.0-beta.4",
+    "@stomp/stompjs": "^5.0.0-beta.3",
     "core-js": "^2.5.4",
-    "ngx-youtube-player": "^6.0.0",
     "rxjs": "~6.2.0",
     "zone.js": "~0.8.26"
   },

@@ -1,6 +1,9 @@
 <div>
   <h1 style="text-align:center">
     Welcome to {{ title }}!
+    <span *ngIf="songQueueService.lobbyId">
+      Lobby id: {{ songQueueService.lobbyId }}
+    </span>
   </h1>
   <div style="display: flex">
     <div class="primary">
