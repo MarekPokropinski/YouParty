@@ -1,3 +1,4 @@
+import { SongQueueService } from './../song-queue.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,17 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SongListComponent implements OnInit {
 
-  songs: Array<string> = ['Never', 'Gonna', 'Give', 'You', 'Up'];
-  songSuggestions: Array<string> = ['Never', 'Gonna'];
   inputValue = '';
 
-  constructor() { }
+  constructor(public songQueueService: SongQueueService) { }
 
   ngOnInit() {
   }
 
   handleSubmit(): void {
-    this.songs.push(this.inputValue);
+    this.songQueueService.push(this.inputValue);
     this.inputValue = '';
   }
 

@@ -31,7 +31,8 @@ public class LobbyServiceImpl implements LobbyService {
 	}
 
 	private List<YoutubeVideo> getQueue(Lobby lobby) {
-		return lobby.getVideoQueue().stream().map(video -> video.getVideo()).collect(Collectors.toList());
+		return lobby.getVideoQueue().stream().sorted((a, b) -> Long.compare(a.getId(), b.getId()))
+				.map(video -> video.getVideo()).collect(Collectors.toList());
 	}
 
 	@Override
@@ -55,6 +56,7 @@ public class LobbyServiceImpl implements LobbyService {
 		try {
 			Lobby lobby = lobbyRepository.findById(lobbyId).orElseThrow(LobbyNotFoundException::new);
 			List<Video> videoQueue = lobby.getVideoQueue();
+			videoQueue.sort((a, b) -> Long.compare(a.getId(), b.getId()));
 			Video videoToRemove = videoQueue.get(0);
 			videoQueue.remove(0);
 			lobbyRepository.save(lobby);

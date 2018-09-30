@@ -98,7 +98,7 @@ public class LobbyServiceTests {
 				}
 				for (int i = 0; i < videoMocks.length; i++) {
 					assertTrue(String.format("First video in queue is not right. Video number: %d", i),
-							getLobby(lobbyId).getVideoQueue().get(0).getVideo().equals(videoMocks[i]));
+							lobbyService.getQueue(lobbyId).get(0).equals(videoMocks[i]));
 					lobbyService.popFromQueue(lobbyId);
 				}
 				assertTrue("queue should be empty", getLobby(lobbyId).getVideoQueue().isEmpty());
