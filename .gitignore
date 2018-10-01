@@ -23,3 +23,4 @@
 /YouParty_backend/dist/
 /YouParty_backend/nbdist/
 /YouParty_backend/.nb-gradle/
+YouParty_backend/src/main/resources/application-prod.properties

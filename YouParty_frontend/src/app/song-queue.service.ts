@@ -4,6 +4,7 @@ import { catchError } from 'rxjs/operators';
 import { Message } from '@stomp/stompjs';
 import { StompService } from '@stomp/ng2-stompjs';
 import { Observable, Subscription, of, Observer } from 'rxjs';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +23,8 @@ export class SongQueueService implements OnDestroy {
   });
   public messages: Observable<Message>;
   public lobbyId: number;
-  private lobbyUrl = 'http://localhost:8080/lobby';
-  private youUrl = 'http://localhost:8080/you';
+  private lobbyUrl = environment.backendUrl + '/lobby';
+  private youUrl = environment.backendUrl + '/you';
   private listeners: Array<Observer<void>> = [];
   private subscription: Subscription;
 

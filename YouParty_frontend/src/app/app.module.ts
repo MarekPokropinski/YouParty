@@ -11,10 +11,11 @@ import { QrDisplayComponent } from './qr-display/qr-display.component';
 import { ImageDisplayComponent } from './image-display/image-display.component';
 
 import { StompConfig, StompService } from '@stomp/ng2-stompjs';
+import { environment } from '../environments/environment';
 
 
 const stompConfig: StompConfig = {
-  url: 'ws://localhost:8080/queueWS',
+  url: environment.wsUrl + '/queueWS',
   headers: {
     login: 'guest',
     passcode: 'guest'
