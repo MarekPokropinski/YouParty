@@ -92,4 +92,8 @@ export class SongQueueService implements OnDestroy {
         }
       });
   }
+
+  getLobbyId(): Number {
+    return this.lobbyId;
+  }
 }

@@ -1,8 +1,8 @@
 <div>
   <h1 style="text-align:center">
     Welcome to {{ title }}!
-    <span *ngIf="songQueueService.lobbyId">
-      Lobby id: {{ songQueueService.lobbyId }}
+    <span *ngIf="songQueueService.getLobbyId()">
+      Lobby id: {{ songQueueService.getLobbyId() }}
     </span>
   </h1>
   <div style="display: flex">
@@ -11,7 +11,7 @@
       <app-song-controller></app-song-controller>
     </div>
     <div class="secondary" style="width: 400px; margin-left: 40px">
-      <app-qr-display></app-qr-display>
+      <app-qr-display [qrPath]="qrCodeUrl+songQueueService.getLobbyId()"></app-qr-display>
       <app-song-list></app-song-list>
     </div>
   </div>

@@ -1,5 +1,6 @@
 import { SongQueueService } from './song-queue.service';
 import { Component } from '@angular/core';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  private qrCodeUrl: string = environment.backendUrl + '/qrcode?partyId=';
 
   constructor(
     public songQueueService: SongQueueService
