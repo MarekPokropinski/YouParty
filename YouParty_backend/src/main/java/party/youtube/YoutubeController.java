@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(path = "/you")
+@RequestMapping(path = "${api.base.path}/you")
 @Profile(value = { "dev", "prod" })
 public class YoutubeController {
 

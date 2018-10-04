@@ -1,18 +1,1 @@
-<div>
-  <h1 style="text-align:center">
-    Welcome to {{ title }}!
-    <span *ngIf="songQueueService.lobbyId">
-      Lobby id: {{ songQueueService.lobbyId }}
-    </span>
-  </h1>
-  <div style="display: flex">
-    <div class="primary">
-      <app-image-display></app-image-display>
-      <app-song-controller></app-song-controller>
-    </div>
-    <div class="secondary" style="width: 400px; margin-left: 40px">
-      <app-qr-display></app-qr-display>
-      <app-song-list></app-song-list>
-    </div>
-  </div>
-</div>
+<router-outlet></router-outlet>

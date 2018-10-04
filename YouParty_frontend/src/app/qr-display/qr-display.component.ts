@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-qr-display',
@@ -7,11 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QrDisplayComponent implements OnInit {
 
-  svgPath = 'assets/qrcode.svg';
+  @Input() qrPath: string;
 
   constructor() { }
 
   ngOnInit() {
   }
-
 }

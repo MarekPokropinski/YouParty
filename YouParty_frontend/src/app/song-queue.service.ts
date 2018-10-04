@@ -5,6 +5,7 @@ import { Message } from '@stomp/stompjs';
 import { StompService } from '@stomp/ng2-stompjs';
 import { Observable, Subscription, of, Observer } from 'rxjs';
 import { environment } from '../environments/environment';
+import { LobbyService } from './lobby.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,39 +23,41 @@ export class SongQueueService implements OnDestroy {
     };
   });
   public messages: Observable<Message>;
-  public lobbyId: number;
-  private lobbyUrl = environment.backendUrl + '/lobby';
   private youUrl = environment.backendUrl + '/you';
+  private queueUrl = `${environment.backendUrl}/lobby/queue`;
   private listeners: Array<Observer<void>> = [];
   private subscription: Subscription;
 
   constructor(
     private http: HttpClient,
-    private _stompService: StompService
-  ) {
-    this.init();
+    private _stompService: StompService,
+    private lobbyService: LobbyService
+  ) { }
+
+  private lobbyId: number;
+
+  init(lobbyId: number): void {
+    this.lobbyId = lobbyId;
+    this.messages = this._stompService.subscribe(`/queue/${this.lobbyId}`);
+    this.subscription = this.messages.subscribe((message: Message) => {
+      try {
+        this.songs = JSON.parse(message.body) as Array<Video>;
+        // iterate backwards so you can unsubscribe in subscribtion
+        this.notifyListeners();
+      } catch (error) {
+        console.error(`Got error while receiving/parsing message: ${error}`);
+      }
+    });
+    this.http.get<Array<Video>>(`${this.queueUrl}?lobbyId=${this.lobbyId}`).subscribe((songs) => {
+      this.songs = songs;
+      this.notifyListeners();
+    });
   }
 
-  init(): void {
-    this.http.post<number>(`${this.lobbyUrl}/createLobby`, {})
-      .pipe(
-        catchError(this.handleError('createLobby', 0))
-      )
-      .subscribe((id) => {
-        this.lobbyId = id;
-        this.messages = this._stompService.subscribe(`/queue/${this.lobbyId}`);
-        this.subscription = this.messages.subscribe((message: Message) => {
-          try {
-            this.songs = JSON.parse(message.body) as Array<Video>;
-            // iterate backwards so you can unsubscribe in subscribtion
-            for (let i = this.listeners.length - 1; i >= 0; i--) {
-              this.listeners[i].next(null);
-            }
-          } catch (error) {
-            console.error(`Got error while receiving/parsing message: ${error}`);
-          }
-        });
-      });
+  private notifyListeners(): void {
+    for (let i = this.listeners.length - 1; i >= 0; i--) {
+      this.listeners[i].next(null);
+    }
   }
 
   ngOnDestroy() {

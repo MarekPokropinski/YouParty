@@ -12,6 +12,8 @@ import { ImageDisplayComponent } from './image-display/image-display.component';
 
 import { StompConfig, StompService } from '@stomp/ng2-stompjs';
 import { environment } from '../environments/environment';
+import { AppRoutingModule } from './app-routing.module';
+import { MainScreenComponent } from './main-screen/main-screen.component';
 
 
 const stompConfig: StompConfig = {
@@ -32,13 +34,15 @@ const stompConfig: StompConfig = {
     SongListComponent,
     SongControllerComponent,
     QrDisplayComponent,
-    ImageDisplayComponent
+    ImageDisplayComponent,
+    MainScreenComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     YoutubePlayerModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [
     StompService,
