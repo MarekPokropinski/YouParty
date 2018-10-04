@@ -13,5 +13,4 @@ export class QrDisplayComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

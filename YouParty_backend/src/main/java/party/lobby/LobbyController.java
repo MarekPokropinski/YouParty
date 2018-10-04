@@ -19,7 +19,7 @@ import party.youtube.YoutubeVideo;
 
 @Controller
 @CrossOrigin(origins = "*")
-@RequestMapping(path = "/lobby")
+@RequestMapping(path = "${api.base.path}/lobby")
 public class LobbyController {
 
 	private static final Logger LOG = Logger.getLogger(LobbyController.class);

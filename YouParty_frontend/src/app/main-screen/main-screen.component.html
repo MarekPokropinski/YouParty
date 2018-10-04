@@ -1,0 +1,15 @@
+<div>
+  <h1 style="text-align:center" *ngIf="lobbyId">
+    Welcome to {{ title }}! Lobby id: {{ lobbyId }}
+  </h1>
+  <div style="display: flex">
+    <div class="primary">
+      <app-image-display></app-image-display>
+      <app-song-controller></app-song-controller>
+    </div>
+    <div class="secondary" style="width: 400px; margin-left: 40px" *ngIf="lobbyId">
+      <app-qr-display [qrPath]="qrCodeUrl+lobbyId"></app-qr-display>
+      <app-song-list [lobbyId]="lobbyId"></app-song-list>
+    </div>
+  </div>
+</div>

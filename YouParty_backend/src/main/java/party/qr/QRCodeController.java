@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.zxing.WriterException;
 
 @RestController
+@RequestMapping("${api.base.path}")
 public class QRCodeController {
 
 	private static final Logger LOG = Logger.getLogger(QRCodeController.class);
