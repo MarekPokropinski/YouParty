@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +16,7 @@ import com.google.api.services.youtube.model.SearchResult;
 @Profile(value = { "dev", "prod" })
 public class YoutubeServiceImpl implements YoutubeService {
 	private static final long MAX_RESULTS = 5;
-
-	@Value("${google.api.key}")
-	private String apiKey;
+	private String apiKey = YoutubeConfig.apiKey();
 
 	@Autowired
 	private YouTube youtube;

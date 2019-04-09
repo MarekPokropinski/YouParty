@@ -25,3 +25,4 @@
 /YouParty_backend/.nb-gradle/
 YouParty_backend/src/main/resources/application-prod.properties
 YouParty_backend/src/main/resources/static/
+YouParty_backend/src/main/resources/apikey.key
